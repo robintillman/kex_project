@@ -23,6 +23,8 @@ def LIX(words, sents, longs):
     return res
     
 
+#   Clean text for easy parsing;
+#   remove/replace unwanted characters etc.
 def clean_text(text):
     # Remove wiki titles
     text = re.sub(r"==+ \w+[ \w+]* ==+", " ", text) # Merge paragraphs to one text
@@ -81,6 +83,7 @@ def word_count(text):
     res = text.count(" ") + 1
     return res
 
+
 #   After cleaning text the number of sentences are equal to
 #   the amount of dots. The result will be tripped by
 #   occurences of shortened words such as "U.S" or "Mr. ". 
@@ -89,6 +92,7 @@ def sentence_count(text):
     res = text.count(".")
     return res
 
+
 #   Remove all spaces and other non-characters
 #   and the length of the remaining string will
 #   be equal to the amount of characters 
@@ -96,9 +100,10 @@ def character_count(text):
     res = len(re.sub("[\. \W]+", "", text))
     return res
 
+
 #   LIX use the amount of long words in its formula
-#   (a long words is defines as a word with more than
-#   6 characters).
+#   (a long word is defined as a word with more than
+#   6 characters)
 def long_word_count(text):
     text = re.sub("\.", "", text)
     word_list = text.split(" ")
@@ -109,7 +114,9 @@ def long_word_count(text):
     
     return res
     
+    
 def main():
+    #wikipedia.set_lang("sv") # Set to swedish wikipedia search  
     text = wikipedia.page("Flesch-Kincaid").content
     
     cleaned_text = clean_text(text)
