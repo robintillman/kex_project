@@ -130,7 +130,7 @@ def main():
             print()
             translation = translator.translate(country)
             text = wikipedia.page(translation).content
-            print(" .........." + translation.upper() + "..........")
+            print("     .........." + translation.upper() + "..........")
             
             cleaned_text = clean_text(text)
             
@@ -139,8 +139,9 @@ def main():
             sents = sentence_count(cleaned_text)
             longs = long_word_count(cleaned_text)
             
-            print(" CLI: " + str(CLI(chars, words, sents)))
-            print(" ARI: " + str(ARI(chars, words, sents)))
-            print(" LIX: " + str(LIX(words, sents, longs)))
+            print("         CLI: " + str(CLI(chars, words, sents)))
+            print("         ARI: " + str(ARI(chars, words, sents)))
+            print("         LIX: " + str(LIX(words, sents, longs)))
     
+    print()
 if  __name__ =='__main__':main()   
