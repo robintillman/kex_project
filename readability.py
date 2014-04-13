@@ -118,7 +118,89 @@ def long_word_count(text):
     
     return res
     
-def write_json():
+def calc_darwin():
+    en_version = open('texts/darwinEN.txt', 'r')
+    sv_version = open('texts/darwinSV.txt', 'r')
+    
+    # Read files, return string
+    en = en_version.read()
+    sv = sv_version.read()
+    
+    # Clean strings
+    en = clean_text(en)
+    sv = clean_text(sv)
+    
+    # Calc parameters
+    en_chars = character_count(en)
+    en_words = word_count(en)
+    en_sents = sentence_count(en)
+    en_longs = long_word_count(en)
+        
+    sv_chars = character_count(sv)
+    sv_words = word_count(sv)
+    sv_sents = sentence_count(sv)
+    sv_longs = long_word_count(sv)    
+    
+    # Calc indexes
+    EN_CLI = CLI(en_chars, en_words, en_sents)
+    EN_ARI = ARI(en_chars, en_words, en_sents)
+    EN_LIX = LIX(en_words, en_sents, en_longs)
+
+    SV_CLI = CLI(sv_chars, sv_words, sv_sents)
+    SV_ARI = ARI(sv_chars, sv_words, sv_sents)
+    SV_LIX = LIX(sv_words, sv_sents, sv_longs)   
+    
+    print()
+    print("EN CLI: ", EN_CLI)
+    print("EN ARI: ", EN_ARI)
+    print("EN LIX: ", EN_LIX)
+    print("SV CLI: ", SV_CLI)
+    print("SV ARI: ", SV_ARI)
+    print("SV LIX: ", SV_LIX)
+    print()
+    
+def calc_bible():
+    en_version = open('texts/bibleEN.txt', 'r')
+    sv_version = open('texts/bibleSV.txt', 'r')
+    
+    # Read files, return string
+    en = en_version.read()
+    sv = sv_version.read()
+    
+    # Clean strings
+    en = clean_text(en)
+    sv = clean_text(sv)
+    
+    # Calc parameters
+    en_chars = character_count(en)
+    en_words = word_count(en)
+    en_sents = sentence_count(en)
+    en_longs = long_word_count(en)
+        
+    sv_chars = character_count(sv)
+    sv_words = word_count(sv)
+    sv_sents = sentence_count(sv)
+    sv_longs = long_word_count(sv)    
+    
+    # Calc indexes
+    EN_CLI = CLI(en_chars, en_words, en_sents)
+    EN_ARI = ARI(en_chars, en_words, en_sents)
+    EN_LIX = LIX(en_words, en_sents, en_longs)
+
+    SV_CLI = CLI(sv_chars, sv_words, sv_sents)
+    SV_ARI = ARI(sv_chars, sv_words, sv_sents)
+    SV_LIX = LIX(sv_words, sv_sents, sv_longs)   
+    
+    print()
+    print("EN CLI: ", EN_CLI)
+    print("EN ARI: ", EN_ARI)
+    print("EN LIX: ", EN_LIX)
+    print("SV CLI: ", SV_CLI)
+    print("SV ARI: ", SV_ARI)
+    print("SV LIX: ", SV_LIX)
+    print()   
+    
+def write_json_wiki():
     nations = nationsArray.nations
         
     EN_CLI = {}
