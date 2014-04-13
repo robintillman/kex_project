@@ -139,7 +139,10 @@ def calc_darwin():
     sv_chars = character_count(sv)
     sv_words = word_count(sv)
     sv_sents = sentence_count(sv)
-    sv_longs = long_word_count(sv)    
+    sv_longs = long_word_count(sv)
+    
+    print("EN CHARS: ", en_chars, " EN WORDS: ", en_words, " EN SENTS: ", en_sents, " EN LONGS: ", en_longs)
+    print("SV CHARS: ", sv_chars, " SV WORDS: ", sv_words, " SV SENTS: ", sv_sents, " SV LONGS: ", sv_longs)    
     
     # Calc indexes
     EN_CLI = CLI(en_chars, en_words, en_sents)
@@ -182,6 +185,9 @@ def calc_bible():
     sv_sents = sentence_count(sv)
     sv_longs = long_word_count(sv)    
     
+    print("EN CHARS: ", en_chars, " EN WORDS: ", en_words, " EN SENTS: ", en_sents, " EN LONGS: ", en_longs)
+    print("SV CHARS: ", sv_chars, " SV WORDS: ", sv_words, " SV SENTS: ", sv_sents, " SV LONGS: ", sv_longs)
+        
     # Calc indexes
     EN_CLI = CLI(en_chars, en_words, en_sents)
     EN_ARI = ARI(en_chars, en_words, en_sents)
@@ -276,7 +282,7 @@ def write_json_wiki():
         with open('SV_LIX.json', 'w') as outfile:
             json.dump(json_string, outfile)    
             
-def calc_average():
+def calc_average_wiki():
     nations = nationsArray.nations
     
     translator = translate.Translator(to_lang="sv")
@@ -288,6 +294,15 @@ def calc_average():
     EN_ARI = 0
     EN_LIX = 0
 
+    en_chars = 0
+    en_words = 0
+    en_sents = 0
+    en_longs = 0
+    sv_chars = 0
+    sv_words = 0
+    sv_sents = 0
+    sv_longs = 0
+    
     for nation in nations:
         sv_nation = translator.translate(nation) # Gain swedish country name
        
@@ -302,23 +317,32 @@ def calc_average():
         
             
         # Count needed parameters
-        en_chars = character_count(en_text)
-        en_words = word_count(en_text)
-        en_sents = sentence_count(en_text)
-        en_longs = long_word_count(en_text)
+        en_chars_this = character_count(en_text)
+        en_words_this = word_count(en_text)
+        en_sents_this = sentence_count(en_text)
+        en_longs_this = long_word_count(en_text)
         
-        sv_chars = character_count(sv_text)
-        sv_words = word_count(sv_text)
-        sv_sents = sentence_count(sv_text)
-        sv_longs = long_word_count(sv_text)
+        sv_chars_this = character_count(sv_text)
+        sv_words_this = word_count(sv_text)
+        sv_sents_this = sentence_count(sv_text)
+        sv_longs_this = long_word_count(sv_text)
         
-        EN_CLI += CLI(en_chars, en_words, en_sents)
-        EN_ARI += ARI(en_chars, en_words, en_sents)
-        EN_LIX += LIX(en_words, en_sents, en_longs)
+        EN_CLI += CLI(en_chars_this, en_words_this, en_sents_this)
+        EN_ARI += ARI(en_chars_this, en_words_this, en_sents_this)
+        EN_LIX += LIX(en_words_this, en_sents_this, en_longs_this)
 
-        SV_CLI += CLI(sv_chars, sv_words, sv_sents)
-        SV_ARI += ARI(sv_chars, sv_words, sv_sents)
-        SV_LIX += LIX(sv_words, sv_sents, sv_longs)
+        SV_CLI += CLI(sv_chars_this, sv_words_this, sv_sents_this)
+        SV_ARI += ARI(sv_chars_this, sv_words_this, sv_sents_this)
+        SV_LIX += LIX(sv_words_this, sv_sents_this, sv_longs_this)
+        
+        en_chars += en_chars_this
+        en_words += en_words_this
+        en_sents += en_sents_this
+        en_longs += en_longs_this
+        sv_chars += sv_chars_this
+        sv_words += sv_words_this
+        sv_sents += sv_sents_this
+        sv_longs += sv_longs_this
         
     SV_CLI_AVG = SV_CLI / len(nations)
     SV_ARI_AVG = SV_ARI / len(nations)
@@ -326,6 +350,21 @@ def calc_average():
     EN_CLI_AVG = EN_CLI / len(nations)
     EN_ARI_AVG = EN_ARI / len(nations)
     EN_LIX_AVG = EN_LIX / len(nations)
+    
+    print("EN CHARS: ", en_chars, " EN WORDS: ", en_words, " EN SENTS: ", en_sents, " EN LONGS: ", en_longs)
+    print("SV CHARS: ", sv_chars, " SV WORDS: ", sv_words, " SV SENTS: ", sv_sents, " SV LONGS: ", sv_longs)
+  
+    EN_CLI_TOTAL = CLI(en_chars, en_words, en_sents)
+    EN_ARI_TOTAL = ARI(en_chars, en_words, en_sents)
+    EN_LIX_TOTAL = LIX(en_words, en_sents, en_longs)
+    
+    print("EN CLI TOTAL: ", EN_CLI_TOTAL, " EN ARI TOTAL: ", EN_ARI_TOTAL, " EN LIX TOTAL: ", EN_LIX_TOTAL)
+
+    SV_CLI_TOTAL = CLI(sv_chars, sv_words, sv_sents)
+    SV_ARI_TOTAL = ARI(sv_chars, sv_words, sv_sents)
+    SV_LIX_TOTAL = LIX(sv_words, sv_sents, sv_longs)
+    
+    print("SV CLI TOTAL: ", SV_CLI_TOTAL, " SV ARI TOTAL: ", SV_ARI_TOTAL, " SV LIX TOTAL: ", SV_LIX_TOTAL)
     
     print()
     print("EN CLI AVG: ", EN_CLI_AVG)
